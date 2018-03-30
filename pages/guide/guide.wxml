@@ -3,34 +3,50 @@
 <view class="counter-warp">
     <view class="content">
       <view id="block-1" 
-          data-id='start-end'
           class="block {{items[0].class.parentClass}}" 
           bindtouchstart="handletouchmove" 
           bindtouchmove="moving"
-          data-isStart = "true">
+          bindtouchend='touchend'
+          data-id='start-end'
+          data-isStart = "true"
+          data-touched='false'>
           <view class="{{items[0].class.childClass[0]}}"></view>
           <view class="{{items[0].class.childClass[1]}}"></view>
           <view class="{{items[0].class.childClass[2]}}"></view>
         </view>
       <view id="block-2" 
-          class="block start-end" 
+          class="block {{items[1].class.parentClass}}" 
           bindtouchstart="handletouchmove" 
           bindtouchmove="moving"
-          data-isStart = "false">
-          <view class="path up hide"></view>
-          <view class="endpoint hide"></view>
-          <view class="path down hide"></view>
+          bindtouchend='touchend'
+          data-isStart = "false"
+          data-touched= 'false'>
+          <view class="{{items[1].class.childClass[0]}}"></view>
+          <view class="{{items[1].class.childClass[1]}}"></view>
+          <view class="{{items[1].class.childClass[2]}}"></view>
       </view>
       <view id="block-3" 
-          data-id='start-end'
-          class="block start-end" 
+          class="block {{items[2].class.parentClass}}" 
           bindtouchstart="handletouchmove" 
           bindtouchmove="moving"
+          bindtouchend='touchend'
           data-isStart = "true"
-          >
-          <view class="path up hide"></view>
-          <view class="endpoint"></view>
-          <view class="path down hide"></view>
+          data-touched= 'false'>
+          <view class="{{items[2].class.childClass[0]}}"></view>
+          <view class="{{items[2].class.childClass[1]}}"></view>
+          <view class="{{items[2].class.childClass[2]}}"></view>
+      </view>
+       <view id="block-4" 
+          data-id='start-end'
+          class="block {{items[3].class.parentClass}}" 
+          bindtouchstart="handletouchmove" 
+          bindtouchmove="moving"
+          bindtouchend='touchend'
+          data-isStart = "true"
+          data-touched= 'false'>
+          <view class="{{items[3].class.childClass[0]}}"></view>
+          <view class="{{items[3].class.childClass[1]}}"></view>
+          <view class="{{items[3].class.childClass[2]}}"></view>
       </view>
     </view>
   </view>
