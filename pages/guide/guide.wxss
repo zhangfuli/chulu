@@ -1,0 +1,6 @@
+/* pages/guide/guide.wxss */
+@import '../../app.wxss';
+
+.content{
+  flex-direction: column;
+}

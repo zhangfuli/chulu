@@ -1,0 +1,99 @@
+/**app.wxss**/
+.hide{
+  display: none;
+}
+.container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: 200rpx 0;
+  box-sizing: border-box;
+} 
+
+.counter-warp {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background-color: #b3d0e8;
+  display:flex;
+  flex-direction:column;
+  align-items:center;/*垂直居中*/
+  justify-content: center;/*水平居中*/
+}
+.content {
+  display: flex;
+  flex-wrap: wrap; 
+}
+.block {
+  width: 200rpx;
+  height: 200rpx;
+  background: white;
+  border-radius: 20rpx;
+  margin: 2rpx;
+  border: .10rpx solid rgba(220,220,220,.1);
+  display: flex;
+  flex-direction: column;
+}
+.start-end{
+  justify-content: center;
+}
+.block-down-path,
+.block-right-down-path {
+  transform: rotate(180deg);
+}
+.block-left-path,
+.block-left-down-path {
+  transform: rotate(-90deg);
+}
+.block-right-path,
+.block-left-right-path,
+.block-up-right-path {
+  transform: rotate(90deg);
+}
+.endpoint {
+  width: 35%;
+  height: 35%;
+  border-radius: 50%;
+  background: #b3d0ff;
+  align-self: center;
+}
+.path {
+  width: 20%;
+  background: #b3d0ff;
+  flex-grow: 0.6;
+  align-self: center;
+}
+.up {
+  margin-bottom: -10%;
+}
+.down {
+  margin-top: -10%;
+}
+.row {
+  width: 100%;
+  height: 33.3%;
+  display: flex;
+}
+.row-endpoint {
+  height: 35%;
+  width:35%;
+  border-radius:50%;
+  margin-top:-29%;
+  background:#b3d0ff;
+  align-self:center;
+}
+.row-path {
+  height: 20%;
+  width:40%;
+  margin-top:7.5%;
+  background-color:#b3d0ff;
+}
+.row-up-path {
+  width: 20%;
+  height:45%; 
+  margin-bottom:-10%;
+  background-color: #b3d0ff;
+  align-self: center;
+}
