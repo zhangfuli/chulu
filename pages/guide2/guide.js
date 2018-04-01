@@ -12,13 +12,14 @@ Page({
     /**
      * 以及class信息
      * [{
-     *  class:"",
+     *  parentClass:"",
+     *  childClass:['','',''] //三个子view
      * }]
      * */
     currentId: '', //用于记录当前滑动对象的id
     isStart: '',  //判断用户是不是从起点开始移动
     startId: '',  //用于记录用户开始的view  id
-    animation: ''
+    test:'11'
   },
 
   /**
@@ -81,7 +82,18 @@ Page({
       self.items = rects[0];
       self.originItems = rects[0];
       for(let i=0; i<self.items.length; i++){
-          self.items[i].class = ''; 
+        if(i === 0 || i === self.items.length -1){
+          self.items[i].class = {
+            parentClass: "start-end",
+            childClass: ['path up hide', 'endpoint', 'path down hide'] //三个子view
+          }   
+        }else{
+          self.items[i].class = {
+            parentClass:"start-end",
+            childClass:['hide', 'hide', 'hide'] //三个子view
+          }
+        }  
+       
       }
       self.setData({ items: self.items });  
       self.originItems = JSON.parse(JSON.stringify(self.items));
@@ -91,20 +103,21 @@ Page({
    * 用户开始滑动
    */
   handletouchmove: function (event) {
+    this.items = JSON.parse(JSON.stringify(this.originItems))
+    this.setData({items: this.originItems})
     this.startX = event.touches[0].clientX;
     this.startY = event.touches[0].clientY;
     this.currentId = event.currentTarget.id;
     this.startId = event.currentTarget.id;
 
-
     //判定从起点开始滑动
-    // if( event.currentTarget.dataset.isstart === 'false'){
-    //   wx.showToast({
-    //     title: '请选择起点',
-    //     image: '../images/error.png',
-    //   })
-    //   this.setData({ items: this.originItems })
-    // }
+    if( event.currentTarget.dataset.isstart === 'false'){
+      wx.showToast({
+        title: '请选择起点',
+        image: '../images/error.png',
+      })
+      this.setData({ items: this.originItems })
+    }
   },
   /**
    * 滑动方向
@@ -128,31 +141,39 @@ Page({
   touchend: function(){
     let j=0;
     for (let i = 0; i < this.items.length; i++) {
-      if (this.items[i].class.indexOf("arrived") != -1){
+      if (this.items[i].dataset.touched == "true"){
         j++;
       }
     }
     if (this.items.length == j){
+      console.log("qunaguo")
       wx.showToast({
-        title: 'great！跳转下一关',
+        title: 'great！清除缓存',
         icon: 'success',
         duration: 2000
       })
       //清除数据缓存
-
+    }else{
+      wx.showToast({
+        title: '没有全遍历哦',
+        image: '../images/error.png',
+        duration: 2000
+      })
+      this.setData({ items: this.originItems })
+      this.items = JSON.parse(JSON.stringify(this.originItems))
     }
   },
   addPath: function(preId, nextId){
     //手指滑出， 刷新页面
     if(nextId === this.startId){
       //刷新--重新导航到当前页面
-      // wx.showToast({
-      //   title: '滑出去啦',
-      //   image: '../images/error.png',
-      //   duration: 2000
-      // })
-      // this.setData({items: this.originItems})
-      // this.items = JSON.parse(JSON.stringify(this.originItems))
+      wx.showToast({
+        title: '滑出去啦',
+        image: '../images/error.png',
+        duration: 2000
+      })
+      this.setData({items: this.originItems})
+      this.items = JSON.parse(JSON.stringify(this.originItems))
     }
     
     /**
@@ -175,88 +196,62 @@ Page({
       case 'down':
         for (let i in self.items) { 
           if (self.items[i].id === preId) {//正则不好匹配
-            switch (self.items[i].class){
-              //增加
-              case 'arrived':
-                self.items[i].class = 'arrived arrived-bottom'
+            switch (self.items[i].class.parentClass){
+              case 'start-end':
+                self.items[i].class.parentClass = 'block-down-path';
+                self.items[i].class.childClass = ['path up', 'endpoint', 'path down hide'];
                 break;
-              case '':
-                self.items[i].class = 'arrived arrived-bottom'
+              case 'block-up-path':
+                self.items[i].class.parentClass = 'block-up-down-path';
+                self.items[i].class.childClass = ['path up', 'endpoint', 'path down'];
                 break;
-              case 'arrived arrived-top':
-                self.items[i].class = 'arrived arrived-top-bottom'
+              case 'block-left-path':
+                self.items[i].class.parentClass = 'block-left-down-path';
+                self.items[i].class.childClass = ['row-up-path', 'row-path', 'row-endpoint'];
                 break;
-              
-              //删除
-              case 'arrived arrived-bottom':
-                self.items[i].class = ''
-              case 'arrived arrived-top-bottom':
-                self.items[i].class = ''
-            }
-          }
-          if (self.items[i].id === nextId) {//正则不好匹配
-            switch (self.items[i].class) {
-              //增加
-              case '':
-                self.items[i].class = 'arrived arrived-top'
-                break;
-
-              //删除
-              case 'arrived arrived-top':
-                self.items[i].class = ''
-                break;
-              case 'arrived arrived-top-bottom':
-                self.items[i].class = 'arrived arrived-bottom'
+              case 'block-right-path':
+                self.items[i].class.parentClass = 'block-right-down-path';
+                self.items[i].class.childClass = ['row-up-path', 'row-path', 'row-endpoint'];
                 break;
             }
           }
-        }  
+          if (this.items[i].id === nextId) {
+            self.items[i].class.parentClass = 'block-up-path';
+            self.items[i].class.childClass = ['path up', 'endpoint', 'path down hide'];
+          }
+        }
         break;
-      case 'up':
+      case "up":
         for (let i in self.items) {
-          if (self.items[i].id === preId) {//正则不好匹配
-            switch (self.items[i].class) {
-              //增加
-              case 'arrived':
-                self.items[i].class = 'arrived arrived-top'
+          if (self.items[i].id === preId) {
+            switch (self.items[i].class.parentClass) {
+              case 'start-end':
+                self.items[i].class.parentClass = 'block-up-path hide';
+                self.items[i].class.childClass = ['path up', 'endpoint', 'path down hide'];
                 break;
-              case '':
-                self.items[i].class = 'arrived arrived-top'
+              case 'block-down-path':
+                self.items[i].class.parentClass = 'block-up-down-path';
+                self.items[i].class.childClass = ['path up', 'endpoint', 'path down'];
                 break;
-              case 'arrived arrived-bottom':
-                self.items[i].class = 'arrived arrived-top-bottom'
+              case 'block-left-path':
+                self.items[i].class.parentClass = 'block-up-left-path';
+                self.items[i].class.childClass = ['row-up-path', 'row-path', 'row-endpoint'];
                 break;
-
-              //删除
-              case 'arrived arrived-top':
-                self.items[i].class = ''
-                break;
-              case 'arrived arrived-top-bottom':
-                self.items[i].class = ''
-                break;
+              case 'block-right-path':
+                self.items[i].class.parentClass = 'block-up-right-path';
+                self.items[i].class.childClass = ['row-up-path', 'row-path', 'row-endpoint'];
             }
           }
-          if (self.items[i].id === nextId) {//正则不好匹配
-            switch (self.items[i].class) {
-              case '':
-                self.items[i].class = 'arrived arrived-bottom'
-                break;
-
-              //删除
-              case 'arrived arrived-top-bottom':
-                self.items[i].class = 'arrived arrived-top'
-                break;
-              case 'arrived arrived-bottom':
-                self.items[i].class = 'arrived'
-                break;
-            }
+          if (this.items[i].id === nextId) {
+            self.items[i].class.parentClass = 'block-down-path';
+            self.items[i].class.childClass = ['path up', 'endpoint', 'path down hide'];
           }
         }
         break;
       // case 字符串:
       //   语句;
       // default:
-      //   // 语句;
+      //   语句;
     }
     self.setData({items:self.items})
   },
@@ -268,16 +263,5 @@ Page({
         return [this.items[i].left, this.items[i].top]
       }
     }
-  },
-  refresh: function(event){
-    let self = this;
-    this.items = [];
-    this.items = JSON.parse(JSON.stringify(this.originItems));
-    this.setData({ animation: 'animation-rotate' });
-    setTimeout(function(){
-      self.setData({ items: self.originItems });
-      self.setData({ animation: '' });
-    },1000)
-
   }
 })

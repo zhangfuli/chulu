@@ -1,0 +1,64 @@
+<!--pages/model/model.wxml-->
+<view class="counter-warp">
+    <view class="content">
+      <view id="start-end" 
+          class="block start-end" 
+          bindtouchstart="handletouchmove" 
+          bindtouchmove="moving"
+          >
+          <view class="endpoint"></view>
+        </view>
+      <view id="block-up-path" 
+        class="block block-up-path" 
+        bindtouchstart="handletouchmove" 
+        bindtouchmove="moving">
+        <view class="path up"></view>
+        <view class="endpoint"></view>
+      </view>
+      <view id="block-left-path"
+       class="block block-left-path" 
+       bindtouchstart="handleProxy" 
+       bindtouchmove="handleProxy">
+        <view class="path up"></view>
+        <view class="endpoint"></view>
+      </view>
+      <view id="block-down-path" class="block block-down-path">
+        <view class="path up"></view>
+        <view class="endpoint"></view>
+      </view>
+      <view id="block-right-path" class="block block-right-path">
+        <view class="path up"></view>
+        <view class="endpoint"></view>
+      </view>
+      <view id="block-left-right-path" class="block block-left-right-path">
+        <view class="path up"></view>
+        <view class="endpoint"></view>
+        <view class="path down"></view>
+      </view>
+      <view id="block-up-down-path" class="block block-up-down-path">
+        <view class="path up"></view>
+        <view class="endpoint"></view>
+        <view class="path down"></view>
+      </view>
+      <view id="block-up-left-path" class="block block-up-left-path">
+         <view class="row-up-path"></view>
+        <view class="row-path"></view>
+        <view class="row-endpoint"></view>
+      </view>
+      <view id="block-left-down-path" class="block block-left-down-path">
+        <view class="row-up-path"></view>
+        <view class="row-path"></view>
+        <view class="row-endpoint"></view>
+      </view>
+      <view id="block-right-down-path" class="block block-right-down-path">
+        <view class="row-up-path"></view>
+        <view class="row-path"></view>
+        <view class="row-endpoint"></view>
+      </view>
+      <view id="block-up-right-path" class="block block-up-right-path">
+        <view class="row-up-path"></view>
+        <view class="row-path"></view>
+        <view class="row-endpoint"></view>
+      </view>
+  </view>
+</view>      

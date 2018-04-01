@@ -1,52 +1,37 @@
 <!--pages/guide/guide.wxml-->
-<!--pages/model/model.wxml-->
 <view class="counter-warp">
     <view class="content">
       <view id="block-1" 
-          class="block {{items[0].class.parentClass}}" 
+          class="block arrived {{items[0].class}}" 
           bindtouchstart="handletouchmove" 
           bindtouchmove="moving"
           bindtouchend='touchend'
-          data-id='start-end'
-          data-isStart = "true"
-          data-touched='false'>
-          <view class="{{items[0].class.childClass[0]}}"></view>
-          <view class="{{items[0].class.childClass[1]}}"></view>
-          <view class="{{items[0].class.childClass[2]}}"></view>
+          data-isStart = "true">
         </view>
       <view id="block-2" 
-          class="block {{items[1].class.parentClass}}" 
+          class="block {{items[1].class}}" 
           bindtouchstart="handletouchmove" 
           bindtouchmove="moving"
           bindtouchend='touchend'
-          data-isStart = "false"
-          data-touched= 'false'>
-          <view class="{{items[1].class.childClass[0]}}"></view>
-          <view class="{{items[1].class.childClass[1]}}"></view>
-          <view class="{{items[1].class.childClass[2]}}"></view>
+          data-isStart = "false">
       </view>
       <view id="block-3" 
-          class="block {{items[2].class.parentClass}}" 
+          class="block {{items[2].class}}" 
           bindtouchstart="handletouchmove" 
           bindtouchmove="moving"
           bindtouchend='touchend'
-          data-isStart = "true"
-          data-touched= 'false'>
-          <view class="{{items[2].class.childClass[0]}}"></view>
-          <view class="{{items[2].class.childClass[1]}}"></view>
-          <view class="{{items[2].class.childClass[2]}}"></view>
+          data-isStart = "false">
       </view>
        <view id="block-4" 
-          data-id='start-end'
-          class="block {{items[3].class.parentClass}}" 
+          class="block {{items[3].class}}" 
           bindtouchstart="handletouchmove" 
           bindtouchmove="moving"
           bindtouchend='touchend'
-          data-isStart = "true"
-          data-touched= 'false'>
-          <view class="{{items[3].class.childClass[0]}}"></view>
-          <view class="{{items[3].class.childClass[1]}}"></view>
-          <view class="{{items[3].class.childClass[2]}}"></view>
+          data-isStart = "false">
       </view>
+    </view>
+    
+    <view class='img-wrap {{animation}}' bindtap='refresh'> 
+      <image src='../images/shuaxin.png' class='img'></image>
     </view>
   </view>

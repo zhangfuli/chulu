@@ -1,2 +1,2 @@
-/* pages/model/model.wxss */
+/**app.wxss**/
 @import '../../app.wxss';
