@@ -1,64 +1,82 @@
 <!--pages/model/model.wxml-->
 <view class="counter-warp">
     <view class="content">
-      <view id="start-end" 
-          class="block start-end" 
+    <!-- 1 -->
+      <view id="" 
+          class="block arrived arrived-right" 
           bindtouchstart="handletouchmove" 
           bindtouchmove="moving"
           >
-          <view class="endpoint"></view>
-        </view>
-      <view id="block-up-path" 
-        class="block block-up-path" 
-        bindtouchstart="handletouchmove" 
-        bindtouchmove="moving">
-        <view class="path up"></view>
-        <view class="endpoint"></view>
       </view>
-      <view id="block-left-path"
-       class="block block-left-path" 
-       bindtouchstart="handleProxy" 
-       bindtouchmove="handleProxy">
-        <view class="path up"></view>
-        <view class="endpoint"></view>
+      <!-- 2 -->
+      <view id="" 
+          class="block arrived arrived-left-right" 
+          bindtouchstart="handletouchmove" 
+          bindtouchmove="moving"
+          >
       </view>
-      <view id="block-down-path" class="block block-down-path">
-        <view class="path up"></view>
-        <view class="endpoint"></view>
+      <!-- 3 -->
+      <view id="" 
+          class="block arrived arrived-left" 
+          bindtouchstart="handletouchmove" 
+          bindtouchmove="moving"
+          >
       </view>
-      <view id="block-right-path" class="block block-right-path">
-        <view class="path up"></view>
-        <view class="endpoint"></view>
+      <!-- 4 -->
+      <view id="" 
+          class="block arrived arrived-bottom" 
+          bindtouchstart="handletouchmove" 
+          bindtouchmove="moving"
+          >
       </view>
-      <view id="block-left-right-path" class="block block-left-right-path">
-        <view class="path up"></view>
-        <view class="endpoint"></view>
-        <view class="path down"></view>
+      <!-- 5 -->
+      <view id="" 
+          class="block" 
+          bindtouchstart="handletouchmove" 
+          bindtouchmove="moving"
+          >
       </view>
-      <view id="block-up-down-path" class="block block-up-down-path">
-        <view class="path up"></view>
-        <view class="endpoint"></view>
-        <view class="path down"></view>
+      <!-- 6 -->
+      <view id="" 
+          class="block" 
+          bindtouchstart="handletouchmove" 
+          bindtouchmove="moving"
+          >
       </view>
-      <view id="block-up-left-path" class="block block-up-left-path">
-         <view class="row-up-path"></view>
-        <view class="row-path"></view>
-        <view class="row-endpoint"></view>
+      <!-- 7 -->
+      <view id="" 
+          class="block arrived arrived-top-bottom" 
+          bindtouchstart="handletouchmove" 
+          bindtouchmove="moving"
+          >
       </view>
-      <view id="block-left-down-path" class="block block-left-down-path">
-        <view class="row-up-path"></view>
-        <view class="row-path"></view>
-        <view class="row-endpoint"></view>
+      <!-- 8 -->
+      <view id="" 
+          class="block" 
+          bindtouchstart="handletouchmove" 
+          bindtouchmove="moving"
+          >
       </view>
-      <view id="block-right-down-path" class="block block-right-down-path">
-        <view class="row-up-path"></view>
-        <view class="row-path"></view>
-        <view class="row-endpoint"></view>
+      <!-- 9 -->
+      <view id="" 
+          class="block" 
+          bindtouchstart="handletouchmove" 
+          bindtouchmove="moving"
+          >
       </view>
-      <view id="block-up-right-path" class="block block-up-right-path">
-        <view class="row-up-path"></view>
-        <view class="row-path"></view>
-        <view class="row-endpoint"></view>
+      <!-- 10 -->
+      <view id="" 
+          class="block arrived arrived-top" 
+          bindtouchstart="handletouchmove" 
+          bindtouchmove="moving"
+          >
       </view>
-    </view>
+      <!-- 11 -->
+      <view id="" 
+          class="" 
+          bindtouchstart="handletouchmove" 
+          bindtouchmove="moving"
+          >
+      </view>
   </view>
+</view>      

@@ -152,8 +152,6 @@ Page({
         icon: 'success',
         duration: 2000
       })
-      this.setData({ items: this.originItems })
-      this.items = JSON.parse(JSON.stringify(this.originItems))
       //清除数据缓存
     }else{
       wx.showToast({
