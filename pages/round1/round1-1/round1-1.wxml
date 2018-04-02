@@ -6,21 +6,24 @@
             bindtouchmove="moving"
             bindtouchend='touchend'
             bindtap='refresh'
-            data-isStart = "true">
+            data-isStart = "true"
+            data-attr='start'>
           </view>
         <view id='1-2'
             class="block {{items[1].class}}" 
             bindtouchstart="handletouchmove" 
             bindtouchmove="moving"
             bindtouchend='touchend'
-            data-isStart = "false">
+            data-isStart = "{{items[1].dataset.isStart}}"
+            data-attr='path'>
         </view>
         <view id='1-3'
             class="block {{items[2].class}}" 
             bindtouchstart="handletouchmove" 
             bindtouchmove="moving"
             bindtouchend='touchend'
-            data-isStart = "false">
+            data-isStart = "{{items[2].dataset.isStart}}"
+            data-attr='path'>
         </view>
 
         <view id='2-1'
@@ -29,19 +32,21 @@
             bindtouchmove="moving"
             bindtouchend='touchend'
             bindtap='refresh'
-            data-isStart = "false">
+            data-isStart = "{{items[3].dataset.isStart}}"
+            data-attr='path'>
           </view>
         <view id='2-2'
-            data-src='obstacle'
+            data-attr='obstacle'
             class="block {{items[4].class}} obstacle" 
-            data-isStart = "false">
+            data-isStart = "{{items[4].dataset.isStart}}">
         </view>
         <view id='2-3'
             class="block {{items[5].class}}" 
             bindtouchstart="handletouchmove" 
             bindtouchmove="moving"
             bindtouchend='touchend'
-            data-isStart = "false">
+            data-isStart = "{{items[5].dataset.isStart}}"
+            data-attr='path'>
         </view>
 
         <view id='3-1'
@@ -50,27 +55,25 @@
             bindtouchmove="moving"
             bindtouchend='touchend'
             bindtap='refresh'
-            data-isStart = "false">
+            data-isStart = "{{items[6].dataset.isStart}}"
+            data-attr='path'>
           </view>
         <view id='3-2'
             class="block {{items[7].class}}" 
             bindtouchstart="handletouchmove" 
             bindtouchmove="moving"
             bindtouchend='touchend'
-            data-isStart = "false">
+            data-isStart = "{{items[7].dataset.isStart}}"
+            data-attr='path'>
         </view>
         <view id='3-3'
             class="block {{items[8].class}}" 
             bindtouchstart="handletouchmove" 
             bindtouchmove="moving"
             bindtouchend='touchend'
-            data-isStart = "false">
+            data-isStart = "{{items[8].dataset.isStart}}"
+            data-attr='path'>
         </view>
-
-
-
-
-
 
 
 

@@ -12,10 +12,12 @@ Page({
     currentId: '', //用于记录当前滑动对象的id
     isStart: '',  //判断用户是不是从起点开始移动
     startId: '',  //用于记录用户开始的view  id
-    animation: ''
+    animation: '',
+    obstacle: '', //用于记录障碍物的数量
   },
 
   onShow: function () {
+    this.obstacle = 0;
     this.queryMultipleNodes()
   },
 
@@ -35,8 +37,13 @@ Page({
     query.selectAll('.block').boundingClientRect().exec(function (rects) {
       self.items = rects[0];
       self.originItems = rects[0];
+      console.log(self.items)
       for (let i = 0; i < self.items.length; i++) {
         self.items[i].class = '';
+        if (self.items[i].dataset.attr === 'obstacle'){
+          self.obstacle = self.obstacle + 1;
+          console.log(self.obstacle)
+        }
       }
       self.setData({ items: self.items });
       self.originItems = JSON.parse(JSON.stringify(self.items));
@@ -77,8 +84,13 @@ Page({
       if ((this.items[i].left - this.startX < 0 && this.items[i].right - this.startX > 0)
         && (this.items[i].top - this.startY < 0 && this.items[i].bottom - this.startY > 0)) {
         event.currentTarget.id = this.items[i].id;
+        event.currentTarget.dataset = this.items[i].dataset;
         this.items[i].dataset.touched = "true"
       }
+    }
+
+    if (event.currentTarget.dataset.attr == 'obstacle'){
+      event.currentTarget.id = this.currentId
     }
     //当用户的手从一个view滑动到另一个view
     if (event.currentTarget.id !== this.currentId) {
@@ -86,14 +98,31 @@ Page({
       this.currentId = event.currentTarget.id
     }
   },
-  touchend: function () {
+  touchend: function (event) {
+    this.startX = event.changedTouches[0].clientX;
+    this.startY = event.changedTouches[0].clientY;
+    for (let i = 0; i < this.items.length; i++) {
+      if ((this.items[i].left - this.startX < 0 && this.items[i].right - this.startX > 0)
+        && (this.items[i].top - this.startY < 0 && this.items[i].bottom - this.startY > 0)) {
+        // event.currentTarget.id = this.items[i].id;
+        // event.currentTarget.dataset = this.items[i].dataset;
+        // this.items[i].dataset.touched = "true"
+        this.items[i].dataset.isStart = 'true'
+      }
+    }
+    console.log(event)
+    this.setData({ items: this.items})
+ 
+
+ 
     let j = 0;
     for (let i = 0; i < this.items.length; i++) {
       if (this.items[i].class.indexOf("arrived") != -1) {
         j++;
       }
     }
-    if (this.items.length == j) {
+    console.log(this.obstacle)
+    if (this.items.length - this.obstacle == j) {
       wx.showToast({
         title: 'great!',
         icon: 'success',
@@ -367,6 +396,7 @@ Page({
       self.setData({ currentId: ''});
       self.setData({ isStart: ''});
       self.setData({ startId: '' });
+      self.setData({ obstacle: 0 });
     }, 1000)
 
   }
