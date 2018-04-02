@@ -3,7 +3,8 @@
     "pages/guide/guide",
     "pages/model/model",
     "pages/index/index",
-    "pages/logs/logs"
+    "pages/logs/logs",
+    "pages/round1/round1-1/round1-1"
   ],
   "window":{
     "backgroundTextStyle":"light",

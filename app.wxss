@@ -23,6 +23,12 @@ view{
   display: flex;
   flex-wrap: wrap; 
 }
+
+.row{
+  display: flex;
+  justify-content: center;
+}
+
 .block {
   width: 200rpx;
   height: 200rpx;
@@ -33,6 +39,9 @@ view{
   flex-direction: column;
 }
 
+.obstacle{
+  background: #e8b3b3;
+}
 .arrived{
   background: #b3d0e8;
 }
@@ -61,6 +70,27 @@ view{
   border-top: none;
   border-bottom: none;
   border-radius: 0;  
+}
+
+.arrived-left-bottom{
+  border-left: none;
+  border-bottom: none;
+  border-radius: 0 20rpx 0 0;  
+}
+.arrived-left-top{
+  border-left: none;
+  border-top: none;
+  border-radius: 0 0 20rpx 0;  
+}
+.arrived-right-top{
+  border-right: none;
+  border-top: none;
+  border-radius: 0 0 0 20rpx;  
+}
+.arrived-right-bottom{
+  border-right: none;
+  border-bottom: none;
+  border-radius: 20rpx 0 0 0;  
 }
 
 .img-wrap{

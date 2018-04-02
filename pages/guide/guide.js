@@ -98,13 +98,13 @@ Page({
 
 
     //判定从起点开始滑动
-    // if( event.currentTarget.dataset.isstart === 'false'){
-    //   wx.showToast({
-    //     title: '请选择起点',
-    //     image: '../images/error.png',
-    //   })
-    //   this.setData({ items: this.originItems })
-    // }
+    if( event.currentTarget.dataset.isstart === 'false'){
+      wx.showToast({
+        title: '请选择起点',
+        image: '../images/error.png',
+      })
+      this.refresh()
+    }
   },
   /**
    * 滑动方向
@@ -134,25 +134,23 @@ Page({
     }
     if (this.items.length == j){
       wx.showToast({
-        title: 'great！跳转下一关',
+        title: 'great!',
         icon: 'success',
         duration: 2000
       })
       //清除数据缓存
-
+      wx.navigateTo({
+        url: '/pages/round1/round1-1/round1-1'
+      })
     }
+    this.refresh()
   },
   addPath: function(preId, nextId){
     //手指滑出， 刷新页面
     if(nextId === this.startId){
       //刷新--重新导航到当前页面
-      // wx.showToast({
-      //   title: '滑出去啦',
-      //   image: '../images/error.png',
-      //   duration: 2000
-      // })
-      // this.setData({items: this.originItems})
-      // this.items = JSON.parse(JSON.stringify(this.originItems))
+      this.refresh()
+      return;
     }
     
     /**

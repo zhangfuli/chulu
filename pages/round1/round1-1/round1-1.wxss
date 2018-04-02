@@ -1,0 +1,8 @@
+/* pages/round1/round1-1/round1-1.wxss */
+@import '../../../app.wxss';
+
+.content{
+  width: 600rpx;
+  flex-direction: row;
+  margin: 0 auto;
+}

@@ -6,6 +6,7 @@
           bindtouchstart="handletouchmove" 
           bindtouchmove="moving"
           bindtouchend='touchend'
+          bindtap='refresh'
           data-isStart = "true">
         </view>
       <view id="block-2" 
@@ -30,8 +31,7 @@
           data-isStart = "false">
       </view>
     </view>
-    
     <view class='img-wrap {{animation}}' bindtap='refresh'> 
-      <image src='../images/shuaxin.png' class='img'></image>
+      <image src='/pages/images/shuaxin.png' class='img'></image>
     </view>
   </view>
