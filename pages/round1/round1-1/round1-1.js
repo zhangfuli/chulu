@@ -1,4 +1,4 @@
-import { getData , getSelfUrl, getNextUrl, getStart} from './data.js'
+import { getData, getSelfUrl, getNextUrl, getStart } from './data.js'
 import { getDirection, isNext, Stack } from '../../../utils/util.js'
 
 Page({
@@ -203,6 +203,9 @@ Page({
           if (this.stack.getStack()[this.stack.getLength() - 2].dataset.class == 'arrived arrived-right-top') {
             this.stack.getStack()[this.stack.getLength() - 2].dataset.class = 'arrived arrived-top'
           }
+          if (this.stack.getStack()[this.stack.getLength() - 2].dataset.class == 'arrived arrived-right') {
+            this.stack.getStack()[this.stack.getLength() - 2].dataset.class = 'arrived'
+          }
           break;
         }
         case 'top': {
@@ -216,6 +219,9 @@ Page({
           }
           if (this.stack.getStack()[this.stack.getLength() - 2].dataset.class == 'arrived arrived-right-bottom') {
             this.stack.getStack()[this.stack.getLength() - 2].dataset.class = 'arrived arrived-right'
+          }
+          if (this.stack.getStack()[this.stack.getLength() - 2].dataset.class == 'arrived arrived-bottom') {
+            this.stack.getStack()[this.stack.getLength() - 2].dataset.class = 'arrived'
           }
           break;
         }
@@ -231,6 +237,9 @@ Page({
           if (this.stack.getStack()[this.stack.getLength() - 2].dataset.class == 'arrived arrived-right-top') {
             this.stack.getStack()[this.stack.getLength() - 2].dataset.class = 'arrived arrived-right'
           }
+          if (this.stack.getStack()[this.stack.getLength() - 2].dataset.class == 'arrived arrived-top') {
+            this.stack.getStack()[this.stack.getLength() - 2].dataset.class = 'arrived'
+          }
           break;
         }
         case 'right': {
@@ -244,6 +253,9 @@ Page({
           }
           if (this.stack.getStack()[this.stack.getLength() - 2].dataset.class == 'arrived arrived-left-bottom') {
             this.stack.getStack()[this.stack.getLength() - 2].dataset.class = 'arrived arrived-bottom'
+          }
+          if (this.stack.getStack()[this.stack.getLength() - 2].dataset.class == 'arrived arrived-left') {
+            this.stack.getStack()[this.stack.getLength() - 2].dataset.class = 'arrived'
           }
           break;
         }
