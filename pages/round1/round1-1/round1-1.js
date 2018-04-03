@@ -1,403 +1,271 @@
-// pages/round1/round1-1/round1-1.js
-import { getDirection } from '../../../utils/util.js'
+import { getData , getSelfUrl, getNextUrl, getStart} from './data.js'
+import { getDirection, isNext, Stack } from '../../../utils/util.js'
+
 Page({
   /**
    * 页面的初始数据
+   * postion: (row-1)*一行个数+col
+   * 
+   * 
    */
   data: {
-    startX: '',
-    startY: '',
-    items: [], //用于记录路径上每个viewport的位置 
+    items: [],
+    stack: '',
     originItems: [],
-    currentId: '', //用于记录当前滑动对象的id
-    isStart: '',  //判断用户是不是从起点开始移动
-    startId: '',  //用于记录用户开始的view  id
-    animation: '',
-    obstacle: '', //用于记录障碍物的数量
-  },
-
-  onShow: function () {
-    this.obstacle = 0;
-    this.queryMultipleNodes()
+    obstacle: ''
   },
 
   /**
-   * 用户点击右上角分享
+   * 生命周期函数--监听页面加载
    */
-  onShareAppMessage: function () {
+  onLoad: function (options) {
+    var items = getData();
+    this.items = items;
+    this.obstacle = 0;
+    this.setData({
+      items: items
+    })
   },
 
   /**
-   * 获取所有节点
-  */
+   * 生命周期函数--监听页面初次渲染完成
+   */
+  onReady: function () {
+    this.stack = new Stack();
+    this.queryMultipleNodes();
+  },
   queryMultipleNodes: function () {
     let query = wx.createSelectorQuery()
     let i = 0;
     let self = this;
     query.selectAll('.block').boundingClientRect().exec(function (rects) {
       self.items = rects[0];
-      self.originItems = rects[0];
-      console.log(self.items)
-      for (let i = 0; i < self.items.length; i++) {
-        self.items[i].class = '';
-        if (self.items[i].dataset.attr === 'obstacle'){
-          self.obstacle = self.obstacle + 1;
-          console.log(self.obstacle)
+      self.setData({ items: self.items });
+      self.stack.push(self.items[getStart()]);
+      self.originItems = JSON.parse(JSON.stringify(self.items));
+      for (let i in self.items) {
+        if (self.items[i].dataset.attribute === 'obstacle') {
+          self.obstacle++;
         }
       }
-      self.setData({ items: self.items });
-      self.originItems = JSON.parse(JSON.stringify(self.items));
     })
   },
-  /**
-   * 用户开始滑动
-   */
+
+
   handletouchmove: function (event) {
-    this.startX = event.touches[0].clientX;
-    this.startY = event.touches[0].clientY;
-    this.currentId = event.currentTarget.id;
-    //判定从起点开始滑动
-
-    this.startId = event.currentTarget.id;
-    let self = this;
-    if (event.currentTarget.dataset.isstart === 'false') {
-      wx.showToast({
-        title: '请选择起点',
-        image: '/pages/images/error.png',
-        complete: function(){ 
-          setTimeout(function(){
-            self.refresh()
-          },500)
-        }
-      })  
-    }
-
-    
+    console.log("currentId:" + this.stack.checkpop().id)
   },
-  /**
-   * 滑动方向
-  */
-  moving: function moving(event) {
-    this.startX = event.touches[0].clientX;
-    this.startY = event.touches[0].clientY;
+  moving: function (event) {
+    var startX = event.touches[0].clientX;
+    var startY = event.touches[0].clientY;
     for (let i = 0; i < this.items.length; i++) {
-      if ((this.items[i].left - this.startX < 0 && this.items[i].right - this.startX > 0)
-        && (this.items[i].top - this.startY < 0 && this.items[i].bottom - this.startY > 0)) {
+      if ((this.items[i].left - startX < 0 && this.items[i].right - startX > 0)
+        && (this.items[i].top - startY < 0 && this.items[i].bottom - startY > 0)) {
         event.currentTarget.id = this.items[i].id;
+        this.items[i].dataset.arrived = "true";
         event.currentTarget.dataset = this.items[i].dataset;
-        this.items[i].dataset.touched = "true"
-      }
-    }
 
-    if (event.currentTarget.dataset.attr == 'obstacle'){
-      event.currentTarget.id = this.currentId
-    }
-    //当用户的手从一个view滑动到另一个view
-    if (event.currentTarget.id !== this.currentId) {
-      this.addPath(this.currentId, event.currentTarget.id);
-      this.currentId = event.currentTarget.id
+        //滑动的入栈
+        if (!this.stack.inStack(this.items[i])
+          && this.items[i].dataset.attribute !== 'obstacle'
+          && isNext(
+            this.stack.checkpop().id.split('-')[0],
+            this.stack.checkpop().id.split('-')[1],
+            this.items[i].id.split('-')[0],
+            this.items[i].id.split('-')[1])) {
+
+          this.stack.push(this.items[i])
+          this.render(1)
+        }
+        //回退
+        if (this.stack.getLength() > 1
+          && this.items[i].id === this.stack.getStack()[this.stack.getLength() - 2].id) {
+          //this.items[i].dataset.arrived = "false";
+          this.render(-1)
+          this.stack.pop()
+
+        }
+      }
     }
   },
-  touchend: function (event) {
-    this.startX = event.changedTouches[0].clientX;
-    this.startY = event.changedTouches[0].clientY;
-    for (let i = 0; i < this.items.length; i++) {
-      if ((this.items[i].left - this.startX < 0 && this.items[i].right - this.startX > 0)
-        && (this.items[i].top - this.startY < 0 && this.items[i].bottom - this.startY > 0)) {
-        // event.currentTarget.id = this.items[i].id;
-        // event.currentTarget.dataset = this.items[i].dataset;
-        // this.items[i].dataset.touched = "true"
-        this.items[i].dataset.isStart = 'true'
-      }
-    }
-    console.log(event)
-    this.setData({ items: this.items})
- 
 
- 
-    let j = 0;
-    for (let i = 0; i < this.items.length; i++) {
-      if (this.items[i].class.indexOf("arrived") != -1) {
-        j++;
+  //渲染dom
+  render: function (value) {
+    if (value === 1) {
+      this.addPath();
+    } else {
+      this.removePath();
+    }
+    for (let i in this.items) {
+      for (let j in this.stack.getStack()) {
+        if (this.items[i].id === this.stack.getStack()[j].id) {
+          this.items[i] = this.stack.getStack()[j]
+        }
+      }
+      this.setData({
+        items: this.items
+      })
+    }
+  },
+  addPath: function () {
+    //判断stack中最后两个item的相对位置
+    if (this.stack.getLength() > 1) {
+      switch (getDirection(
+        this.stack.getStack()[this.stack.getLength() - 1].left,
+        this.stack.getStack()[this.stack.getLength() - 1].top,
+        this.stack.getStack()[this.stack.getLength() - 2].left,
+        this.stack.getStack()[this.stack.getLength() - 2].top)) {
+        case 'right': {
+          this.stack.getStack()[this.stack.getLength() - 1].dataset.class = 'arrived arrived-left'
+          if (this.stack.getStack()[this.stack.getLength() - 2].dataset.class == 'arrived arrived-left') {
+            this.stack.getStack()[this.stack.getLength() - 2].dataset.class = 'arrived arrived-left-right'
+          }
+          if (this.stack.getStack()[this.stack.getLength() - 2].dataset.class == 'arrived') {
+            this.stack.getStack()[this.stack.getLength() - 2].dataset.class = 'arrived arrived-right'
+          }
+          if (this.stack.getStack()[this.stack.getLength() - 2].dataset.class == 'arrived arrived-bottom') {
+            this.stack.getStack()[this.stack.getLength() - 2].dataset.class = 'arrived arrived-right-bottom'
+          }
+          if (this.stack.getStack()[this.stack.getLength() - 2].dataset.class == 'arrived arrived-top') {
+            this.stack.getStack()[this.stack.getLength() - 2].dataset.class = 'arrived arrived-right-top'
+          }
+          break;
+        }
+        case 'top': {
+          this.stack.getStack()[this.stack.getLength() - 1].dataset.class = 'arrived arrived-bottom'
+          //前一个
+          if (this.stack.getStack()[this.stack.getLength() - 2].dataset.class == 'arrived arrived-left') {
+            this.stack.getStack()[this.stack.getLength() - 2].dataset.class = 'arrived arrived-left-top'
+          }
+          if (this.stack.getStack()[this.stack.getLength() - 2].dataset.class == 'arrived') {
+            this.stack.getStack()[this.stack.getLength() - 2].dataset.class = 'arrived arrived-top'
+          }
+          if (this.stack.getStack()[this.stack.getLength() - 2].dataset.class == 'arrived arrived-bottom') {
+            this.stack.getStack()[this.stack.getLength() - 2].dataset.class = 'arrived arrived-top-bottom'
+          }
+          if (this.stack.getStack()[this.stack.getLength() - 2].dataset.class == 'arrived arrived-right') {
+            this.stack.getStack()[this.stack.getLength() - 2].dataset.class = 'arrived arrived-right-top'
+          }
+          break;
+        }
+        case 'bottom': {
+          this.stack.getStack()[this.stack.getLength() - 1].dataset.class = 'arrived arrived-top'
+          //前一个
+          if (this.stack.getStack()[this.stack.getLength() - 2].dataset.class == 'arrived arrived-left') {
+            this.stack.getStack()[this.stack.getLength() - 2].dataset.class = 'arrived arrived-left-bottom'
+          }
+          if (this.stack.getStack()[this.stack.getLength() - 2].dataset.class == 'arrived') {
+            this.stack.getStack()[this.stack.getLength() - 2].dataset.class = 'arrived arrived-bottom'
+          }
+          if (this.stack.getStack()[this.stack.getLength() - 2].dataset.class == 'arrived arrived-top') {
+            this.stack.getStack()[this.stack.getLength() - 2].dataset.class = 'arrived arrived-top-bottom'
+          }
+          if (this.stack.getStack()[this.stack.getLength() - 2].dataset.class == 'arrived arrived-right') {
+            this.stack.getStack()[this.stack.getLength() - 2].dataset.class = 'arrived arrived-right-bottom'
+          }
+          break;
+        }
+        case 'left': {
+          this.stack.getStack()[this.stack.getLength() - 1].dataset.class = 'arrived arrived-right'
+          //前一个
+          if (this.stack.getStack()[this.stack.getLength() - 2].dataset.class == 'arrived arrived-top') {
+            this.stack.getStack()[this.stack.getLength() - 2].dataset.class = 'arrived arrived-left-top'
+          }
+          if (this.stack.getStack()[this.stack.getLength() - 2].dataset.class == 'arrived') {
+            this.stack.getStack()[this.stack.getLength() - 2].dataset.class = 'arrived arrived-left'
+          }
+          if (this.stack.getStack()[this.stack.getLength() - 2].dataset.class == 'arrived arrived-bottom') {
+            this.stack.getStack()[this.stack.getLength() - 2].dataset.class = 'arrived arrived-left-bottom'
+          }
+          if (this.stack.getStack()[this.stack.getLength() - 2].dataset.class == 'arrived arrived-right') {
+            this.stack.getStack()[this.stack.getLength() - 2].dataset.class = 'arrived arrived-left-right'
+          }
+          break;
+        }
       }
     }
-    console.log(this.obstacle)
-    if (this.items.length - this.obstacle == j) {
+  },
+  removePath: function () {
+    if (this.stack.getLength() > 1) {
+      switch (getDirection(
+        this.stack.getStack()[this.stack.getLength() - 2].left,
+        this.stack.getStack()[this.stack.getLength() - 2].top,
+        this.stack.getStack()[this.stack.getLength() - 1].left,
+        this.stack.getStack()[this.stack.getLength() - 1].top)) {
+        case 'left': {
+          this.stack.getStack()[this.stack.getLength() - 1].dataset.class = ''
+          if (this.stack.getStack()[this.stack.getLength() - 2].dataset.class == 'arrived arrived-left-right') {
+            this.stack.getStack()[this.stack.getLength() - 2].dataset.class = 'arrived arrived-left'
+          }
+          if (this.stack.getStack()[this.stack.getLength() - 2].dataset.class == 'arrived arrived-right-bottom') {
+            this.stack.getStack()[this.stack.getLength() - 2].dataset.class = 'arrived arrived-bottom'
+          }
+          if (this.stack.getStack()[this.stack.getLength() - 2].dataset.class == 'arrived arrived-right-top') {
+            this.stack.getStack()[this.stack.getLength() - 2].dataset.class = 'arrived arrived-top'
+          }
+          break;
+        }
+        case 'top': {
+          this.stack.getStack()[this.stack.getLength() - 1].dataset.class = ''
+          //前一个
+          if (this.stack.getStack()[this.stack.getLength() - 2].dataset.class == 'arrived arrived-top-bottom') {
+            this.stack.getStack()[this.stack.getLength() - 2].dataset.class = 'arrived arrived-top'
+          }
+          if (this.stack.getStack()[this.stack.getLength() - 2].dataset.class == 'arrived arrived-left-bottom') {
+            this.stack.getStack()[this.stack.getLength() - 2].dataset.class = 'arrived arrived-left'
+          }
+          if (this.stack.getStack()[this.stack.getLength() - 2].dataset.class == 'arrived arrived-right-bottom') {
+            this.stack.getStack()[this.stack.getLength() - 2].dataset.class = 'arrived arrived-right'
+          }
+          break;
+        }
+        case 'bottom': {
+          this.stack.getStack()[this.stack.getLength() - 1].dataset.class = ''
+          //前一个
+          if (this.stack.getStack()[this.stack.getLength() - 2].dataset.class == 'arrived arrived-left-top') {
+            this.stack.getStack()[this.stack.getLength() - 2].dataset.class = 'arrived arrived-left'
+          }
+          if (this.stack.getStack()[this.stack.getLength() - 2].dataset.class == 'arrived arrived-top-bottom') {
+            this.stack.getStack()[this.stack.getLength() - 2].dataset.class = 'arrived arrived-bottom'
+          }
+          if (this.stack.getStack()[this.stack.getLength() - 2].dataset.class == 'arrived arrived-right-top') {
+            this.stack.getStack()[this.stack.getLength() - 2].dataset.class = 'arrived arrived-right'
+          }
+          break;
+        }
+        case 'right': {
+          this.stack.getStack()[this.stack.getLength() - 1].dataset.class = ''
+          //前一个
+          if (this.stack.getStack()[this.stack.getLength() - 2].dataset.class == 'arrived arrived-left-right') {
+            this.stack.getStack()[this.stack.getLength() - 2].dataset.class = 'arrived arrived-right'
+          }
+          if (this.stack.getStack()[this.stack.getLength() - 2].dataset.class == 'arrived arrived-left-top') {
+            this.stack.getStack()[this.stack.getLength() - 2].dataset.class = 'arrived arrived-top'
+          }
+          if (this.stack.getStack()[this.stack.getLength() - 2].dataset.class == 'arrived arrived-left-bottom') {
+            this.stack.getStack()[this.stack.getLength() - 2].dataset.class = 'arrived arrived-bottom'
+          }
+          break;
+        }
+      }
+    }
+  },
+  touchend: function () {
+    if (this.stack.getLength() + this.obstacle === this.items.length) {
       wx.showToast({
         title: 'great!',
         icon: 'success',
         duration: 2000
       })
-      //清除数据缓存
-      wx.navigateTo({
-        url: 'pages/round1/round1-1/round1-1'
+      wx.redirectTo({
+        url: getNextUrl()
       })
+      wx.setStorageSync("round", getNextUrl())
     }
   },
-  addPath: function (preId, nextId) {
-    //手指滑出， 刷新页面
-    if (nextId === this.startId) {
-      //刷新--重新导航到当前页面
-      this.refresh()
-      return;
-    }
-
-    /**
-      * 得到两个view的相对位置
-    */
-    let next = this.getPosition(nextId);
-    let pre = this.getPosition(preId);
-    let direction = getDirection(next[0], next[1], pre[0], pre[1]);
-    // /**
-    //  * const result = {
-    //  *'0': 'up',
-    //  * '1': 'right',
-    //  * '2': 'down',
-    //  * '3': 'left',
-    //  * '4': 'not move'
-    //  *};
-    //  * */
-    let self = this;
-    switch (direction) {
-      case 'down':
-        for (let i in self.items) {
-          if (self.items[i].id === preId) {//正则不好匹配
-            switch (self.items[i].class) {
-              //增加
-              case 'arrived':
-                self.items[i].class = 'arrived arrived-bottom'
-                break;
-              case '':
-                self.items[i].class = 'arrived arrived-bottom'
-                break;
-              case 'arrived arrived-top':
-                self.items[i].class = 'arrived arrived-top-bottom'
-                break;
-              case 'arrived arrived-left':
-                self.items[i].class = 'arrived arrived-left-bottom'
-                break;
-              case 'arrived arrived-right':
-                self.items[i].class = 'arrived arrived-right-bottom'
-                break;
-
-              //删除
-              case 'arrived arrived-bottom':
-                self.items[i].class = ''
-
-            }
-          }
-          if (self.items[i].id === nextId) {//正则不好匹配
-            switch (self.items[i].class) {
-              //增加
-              case '':
-                self.items[i].class = 'arrived arrived-top'
-                break;
-
-              //删除
-              case 'arrived arrived-top-bottom':
-                self.items[i].class = 'arrived arrived-bottom'
-                break;
-              case 'arrived arrived-right-top':
-                self.items[i].class = 'arrived arrived-right'
-                break;
-            }
-          }
-        }
-        break;
-      case 'up':
-        for (let i in self.items) {
-          if (self.items[i].id === preId) {//正则不好匹配
-            switch (self.items[i].class) {
-              //增加
-              case 'arrived':
-                self.items[i].class = 'arrived arrived-top'
-                break;
-              case '':
-                self.items[i].class = 'arrived arrived-top'
-                break;
-              case 'arrived arrived-bottom':
-                self.items[i].class = 'arrived arrived-top-bottom'
-                break;
-              case 'arrived arrived-right':
-                self.items[i].class = 'arrived arrived-right-top'
-                break;
-              case 'arrived arrived-left':
-                self.items[i].class = 'arrived arrived-left-top'
-                break;
-              
-
-              //删除
-              case 'arrived arrived-top':
-                self.items[i].class = ''
-                break;
-              case 'arrived arrived-top-bottom':
-                self.items[i].class = ''
-                break;
-              case 'arrived arrived-right-top':
-                self.items[i].class = ''
-                break;
-              
-            }
-          }
-          if (self.items[i].id === nextId) {//正则不好匹配
-            switch (self.items[i].class) {
-              case '':
-                self.items[i].class = 'arrived arrived-bottom'
-                break;
-
-              //删除
-              case 'arrived arrived-top-bottom':
-                self.items[i].class = 'arrived arrived-top'
-                break;
-              case 'arrived arrived-bottom':
-                self.items[i].class = 'arrived'
-                break;
-              case 'arrived arrived-right-bottom':
-                self.items[i].class = 'arrived arrived-right'
-                break;
-              case 'arrived arrived-left-bottom':
-                self.items[i].class = 'arrived arrived-left'
-                break;
-            }
-          }
-        }
-        break;
-      case 'right':
-        for (let i in self.items) {
-          if (self.items[i].id === preId) {//正则不好匹配
-            switch (self.items[i].class) {
-              //增加
-              case 'arrived':
-                self.items[i].class = 'arrived arrived-right'
-                break;
-              case '':
-                self.items[i].class = 'arrived arrived-right'
-                break;
-              case 'arrived arrived-left':
-                self.items[i].class = 'arrived arrived-left-right'
-                break;
-              case 'arrived arrived-bottom':
-                self.items[i].class = 'arrived arrived-right-bottom'
-                break;
-              case 'arrived arrived-top':
-                self.items[i].class = 'arrived arrived-right-top'
-                break;
-
-              //删除
-              case 'arrived arrived-right':
-                self.items[i].class = ''
-              // case 'arrived arrived-left-right':
-              //   self.items[i].class = ''
-            }
-          }
-          if (self.items[i].id === nextId) {//正则不好匹配
-            switch (self.items[i].class) {
-              //增加
-              case '':
-                self.items[i].class = 'arrived arrived-left'
-                break;
-
-              //删除
-              case 'arrived arrived-left-right':
-                self.items[i].class = 'arrived arrived-right'
-                break;
-               case 'arrived arrived-left-top':
-                self.items[i].class = 'arrived arrived-top'
-                break;
-               case 'arrived arrived-left-bottom':
-                 self.items[i].class = 'arrived arrived-bottom'
-                 break;
-            }
-          }
-        }
-        break;
-      case 'left':
-        for (let i in self.items) {
-          if (self.items[i].id === preId) {//正则不好匹配
-            switch (self.items[i].class) {
-              //增加
-              case 'arrived':
-                self.items[i].class = 'arrived arrived-left'
-                break;
-              case '':
-                self.items[i].class = 'arrived arrived-left'
-                break;
-              case 'arrived arrived-right':
-                self.items[i].class = 'arrived arrived-left-right'
-                break;
-              case 'arrived arrived-top':
-                self.items[i].class = 'arrived arrived-left-top'
-                break;
-              case 'arrived arrived-bottom':
-                self.items[i].class = 'arrived arrived-left-bottom'
-                break;
-
-              //删除
-              case 'arrived arrived-left':
-                self.items[i].class = ''
-                break;
-              case 'arrived arrived-left-bottom':
-                self.items[i].class = ''
-                break;
-              case 'arrived arrived-left-top':
-                self.items[i].class = ''
-                break;
-            }
-          }
-          if (self.items[i].id === nextId) {//正则不好匹配
-            switch (self.items[i].class) {
-              //增加
-              case '':
-                self.items[i].class = 'arrived arrived-right'
-                break;
-
-              //删除
-              case 'arrived arrived-left-right':
-                self.items[i].class = 'arrived arrived-left'
-                break;
-              case 'arrived arrived-right-bottom':
-                self.items[i].class = 'arrived arrived-bottom'
-                break;
-              case 'arrived arrived-right-top':
-                self.items[i].class = 'arrived arrived-top'
-                break;
-        
-            }
-          }
-        }
-        break;
-      // case 字符串:
-      //   语句;
-      // default:
-      //   // 语句;
-    }
-    self.setData({ items: self.items })
-  },
-
-  //得到左上角坐标
-  getPosition: function (itemId) {
-    for (let i in this.items) {
-      if (itemId === this.items[i].id) {
-        return [this.items[i].left, this.items[i].top]
-      }
-    }
-  },
-  refresh: function (event) {
-    console.log(11)
-    let self = this;
-    this.items = [];
-    this.items = JSON.parse(JSON.stringify(this.originItems));
-    this.setData({ animation: 'animation-rotate' });
-    setTimeout(function () {
-      self.setData({ items: self.items });
-      self.setData({ animation: '' });
-      self.setData({ startX: ''});
-      self.setData({ startY: '' });
-      self.setData({ currentId: ''});
-      self.setData({ isStart: ''});
-      self.setData({ startId: '' });
-      self.setData({ obstacle: 0 });
-    }, 1000)
-
+  refresh: function () {
+    wx.redirectTo({
+      url: getSelfUrl()
+    })
   }
 })

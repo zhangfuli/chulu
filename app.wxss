@@ -18,7 +18,13 @@ view{
   align-items:center;/*垂直居中*/
   justify-content: center;/*水平居中*/
 }
-
+.title{
+  position: absolute;
+  top: 0;
+  align-self: center;
+  font-size: 60rpx;
+  color: white;
+}
 .content {
   display: flex;
   flex-wrap: wrap; 
@@ -30,8 +36,8 @@ view{
 }
 
 .block {
-  width: 200rpx;
-  height: 200rpx;
+  width: 100rpx;
+  height: 100rpx;
   background: white;
   border-radius: 20rpx;
   border: 1px solid #e8dcb3;

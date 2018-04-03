@@ -1,15 +1,29 @@
 {
   "pages":[
+    "pages/index/index",
     "pages/guide/guide",
     "pages/model/model",
-    "pages/index/index",
     "pages/logs/logs",
-    "pages/round1/round1-1/round1-1"
+    "pages/round1/round1-1/round1-1",
+    "pages/round1/round1-2/round1-2",
+    "pages/round1/round1-3/round1-3",
+    "pages/round1/round1-4/round1-4",
+    "pages/round1/round1-5/round1-5",
+    "pages/round1/round1-6/round1-6",
+    "pages/round1/round1-7/round1-7",
+    "pages/round1/round1-8/round1-8",
+    "pages/round1/round1-9/round1-9",
+    "pages/round1/round1-10/round1-10",
+    "pages/round1/round1-11/round1-11",
+    "pages/round1/round1-12/round1-12",
+    "pages/round1/round1-13/round1-13",
+    "pages/round1/round1-14/round1-14",
+    "pages/round1/round1-15/round1-15"
   ],
   "window":{
     "backgroundTextStyle":"light",
     "navigationBarBackgroundColor": "#fff",
-    "navigationBarTitleText": "WeChat",
+    "navigationBarTitleText": "一路通北",
     "navigationBarTextStyle":"black"
   }
 }

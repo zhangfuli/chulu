@@ -1,7 +1,5 @@
-@import '../../../app.wxss';
-
 .content{
-  width: 300rpx;
+  width: 400rpx;
   flex-direction: row;
   margin: 0 auto;
 }

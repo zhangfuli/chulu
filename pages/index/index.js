@@ -1,7 +1,6 @@
 //index.js
 //获取应用实例
 const app = getApp()
-
 Page({
   data: {
     motto: 'Hello World',
@@ -50,5 +49,17 @@ Page({
       userInfo: e.detail.userInfo,
       hasUserInfo: true
     })
+  },
+  getRound: function(){
+    try {
+      var value = wx.getStorageSync('round')
+      wx.redirectTo({
+        url: value
+      })
+    } catch (e) {
+      wx.redirectTo({
+        url: "pages/round1/round1-1/round1-1"
+      })
+    }
   }
 })

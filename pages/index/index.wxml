@@ -13,4 +13,5 @@
   <view>
     <navigator url="/pages/model/model">model</navigator>
   </view>
+  <button bindtap='getRound'>闯关模式</button>
 </view>

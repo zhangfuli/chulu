@@ -1,36 +1,23 @@
-<!--pages/guide/guide.wxml-->
 <view class="counter-warp">
+  <view class='title'>
+        guide
+      </view>
     <view class="content">
-      <view id="block-1" 
-          class="block arrived {{items[0].class}}" 
-          bindtouchstart="handletouchmove" 
-          bindtouchmove="moving"
-          bindtouchend='touchend'
-          bindtap='refresh'
-          data-isStart = "true">
+      <block wx:for="{{items}}" wx:for-item="item" wx:for-index="idx">  
+        <view id='{{item.id}}'
+              class='block {{item.dataset.class}}'
+              data-arrived='{{item.arrived}}'
+              data-position='{{item.position}}'
+              data-attribute = '{{item.attribute}}'
+              data-class='{{item.class}}'
+              bindtouchstart="handletouchmove" 
+              bindtouchmove="moving"
+              bindtouchend='touchend'
+              bindlongtap='refresh'
+              >
         </view>
-      <view id="block-2" 
-          class="block {{items[1].class}}" 
-          bindtouchstart="handletouchmove" 
-          bindtouchmove="moving"
-          bindtouchend='touchend'
-          data-isStart = "false">
-      </view>
-      <view id="block-3" 
-          class="block {{items[2].class}}" 
-          bindtouchstart="handletouchmove" 
-          bindtouchmove="moving"
-          bindtouchend='touchend'
-          data-isStart = "false">
-      </view>
-       <view id="block-4" 
-          class="block {{items[3].class}}" 
-          bindtouchstart="handletouchmove" 
-          bindtouchmove="moving"
-          bindtouchend='touchend'
-          data-isStart = "false">
-      </view>
-    </view>
+      </block>  
+  </view>
     <view class='img-wrap {{animation}}' bindtap='refresh'> 
       <image src='/pages/images/shuaxin.png' class='img'></image>
     </view>

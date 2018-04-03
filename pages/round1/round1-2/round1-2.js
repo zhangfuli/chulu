@@ -1,7 +1,7 @@
-import { getData } from './data.js'
-import { getDirection, isNext, Stack } from '../../utils/util.js'
-Page({
+import { getData, getSelfUrl, getNextUrl, getStart } from './data.js'
+import { getDirection, isNext, Stack } from '../../../utils/util.js'
 
+Page({
   /**
    * 页面的初始数据
    * postion: (row-1)*一行个数+col
@@ -41,7 +41,7 @@ Page({
     query.selectAll('.block').boundingClientRect().exec(function (rects) {
       self.items = rects[0];
       self.setData({ items: self.items });
-      self.stack.push(self.items[0* 1 + 0]);
+      self.stack.push(self.items[getStart()]);
       self.originItems = JSON.parse(JSON.stringify(self.items));
       for (let i in self.items) {
         if (self.items[i].dataset.attribute === 'obstacle') {
@@ -51,11 +51,11 @@ Page({
     })
   },
 
+
   handletouchmove: function (event) {
-    // console.log("currentId:" + this.stack.checkpop().id)
-    console.log(this.items);
+    console.log("currentId:" + this.stack.checkpop().id)
   },
-  moving: function (event) {  
+  moving: function (event) {
     var startX = event.touches[0].clientX;
     var startY = event.touches[0].clientY;
     for (let i = 0; i < this.items.length; i++) {
@@ -81,8 +81,9 @@ Page({
         if (this.stack.getLength() > 1
           && this.items[i].id === this.stack.getStack()[this.stack.getLength() - 2].id) {
           //this.items[i].dataset.arrived = "false";
-          this.render(-1);
-          this.stack.pop();
+          this.render(-1)
+          this.stack.pop()
+
         }
       }
     }
@@ -186,11 +187,6 @@ Page({
   },
   removePath: function () {
     if (this.stack.getLength() > 1) {
-      console.log(getDirection(
-        this.stack.getStack()[this.stack.getLength() - 2].left,
-        this.stack.getStack()[this.stack.getLength() - 2].top,
-        this.stack.getStack()[this.stack.getLength() - 1].left,
-        this.stack.getStack()[this.stack.getLength() - 1].top))
       switch (getDirection(
         this.stack.getStack()[this.stack.getLength() - 2].left,
         this.stack.getStack()[this.stack.getLength() - 2].top,
@@ -240,7 +236,6 @@ Page({
         case 'right': {
           this.stack.getStack()[this.stack.getLength() - 1].dataset.class = ''
           //前一个
-          console.log(this.stack.getStack()[this.stack.getLength() - 2].dataset.class)
           if (this.stack.getStack()[this.stack.getLength() - 2].dataset.class == 'arrived arrived-left-right') {
             this.stack.getStack()[this.stack.getLength() - 2].dataset.class = 'arrived arrived-right'
           }
@@ -263,15 +258,14 @@ Page({
         duration: 2000
       })
       wx.redirectTo({
-        url: '/pages/round1/round1-1/round1-1'
+        url: getNextUrl()
       })
-      wx.setStorageSync("round", "/pages/round1/round1-1/round1-1")
+      wx.setStorageSync("round", getNextUrl())
     }
-   
   },
   refresh: function () {
     wx.redirectTo({
-      url: '/pages/guide/guide'
+      url: getSelfUrl()
     })
   }
 })
