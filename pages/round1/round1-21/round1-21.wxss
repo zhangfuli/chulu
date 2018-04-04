@@ -1,5 +1,5 @@
 .content{
-  width: 500rpx;
+  width: 600rpx;
   flex-direction: row;
   margin: 0 auto;
 }

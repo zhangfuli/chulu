@@ -1,7 +1,7 @@
 <!--pages/round1/round1-2test/round1-2test.wxml-->
 <view class="counter-warp">
     <view class='title'>
-        1-13
+        1-19
       </view>
     <view class="content">
       <block wx:for="{{items}}" wx:for-item="item" wx:for-index="idx">  

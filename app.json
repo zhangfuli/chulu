@@ -1,5 +1,10 @@
 {
   "pages":[
+    "pages/round1/round1-22/round1-22",
+    "pages/round1/round1-21/round1-21",
+    "pages/round1/round1-20/round1-20",
+    "pages/round1/round1-19/round1-19",
+    "pages/round1/round1-18/round1-18",
     "pages/index/index",
     "pages/guide/guide",
     "pages/model/model",
@@ -18,7 +23,10 @@
     "pages/round1/round1-12/round1-12",
     "pages/round1/round1-13/round1-13",
     "pages/round1/round1-14/round1-14",
-    "pages/round1/round1-15/round1-15"
+    "pages/round1/round1-15/round1-15",
+    "pages/round1/round1-16/round1-16",
+    "pages/round1/round1-17/round1-17"
+    
   ],
   "window":{
     "backgroundTextStyle":"light",
