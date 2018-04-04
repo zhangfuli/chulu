@@ -53,7 +53,7 @@ Page({
 
   handletouchmove: function (event) {
     // console.log("currentId:" + this.stack.checkpop().id)
-    console.log(this.items);
+    // console.log(this.items);
   },
   moving: function (event) {  
     var startX = event.touches[0].clientX;
@@ -186,11 +186,11 @@ Page({
   },
   removePath: function () {
     if (this.stack.getLength() > 1) {
-      console.log(getDirection(
-        this.stack.getStack()[this.stack.getLength() - 2].left,
-        this.stack.getStack()[this.stack.getLength() - 2].top,
-        this.stack.getStack()[this.stack.getLength() - 1].left,
-        this.stack.getStack()[this.stack.getLength() - 1].top))
+      // console.log(getDirection(
+      //   this.stack.getStack()[this.stack.getLength() - 2].left,
+      //   this.stack.getStack()[this.stack.getLength() - 2].top,
+      //   this.stack.getStack()[this.stack.getLength() - 1].left,
+      //   this.stack.getStack()[this.stack.getLength() - 1].top))
       switch (getDirection(
         this.stack.getStack()[this.stack.getLength() - 2].left,
         this.stack.getStack()[this.stack.getLength() - 2].top,
@@ -240,7 +240,7 @@ Page({
         case 'right': {
           this.stack.getStack()[this.stack.getLength() - 1].dataset.class = ''
           //前一个
-          console.log(this.stack.getStack()[this.stack.getLength() - 2].dataset.class)
+          // console.log(this.stack.getStack()[this.stack.getLength() - 2].dataset.class)
           if (this.stack.getStack()[this.stack.getLength() - 2].dataset.class == 'arrived arrived-left-right') {
             this.stack.getStack()[this.stack.getLength() - 2].dataset.class = 'arrived arrived-right'
           }

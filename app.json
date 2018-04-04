@@ -1,14 +1,22 @@
 {
   "pages":[
-    "pages/round1/round1-22/round1-22",
-    "pages/round1/round1-21/round1-21",
-    "pages/round1/round1-20/round1-20",
-    "pages/round1/round1-19/round1-19",
-    "pages/round1/round1-18/round1-18",
-    "pages/index/index",
+  
+    
+   
+    
+
+    "pages/round1/round1-27/round1-27",
+ 
+   
+   
+  
+   
+   
+  
     "pages/guide/guide",
     "pages/model/model",
     "pages/logs/logs",
+    "pages/index/index",
     "pages/round1/round1-1/round1-1",
     "pages/round1/round1-2/round1-2",
     "pages/round1/round1-3/round1-3",
@@ -25,7 +33,17 @@
     "pages/round1/round1-14/round1-14",
     "pages/round1/round1-15/round1-15",
     "pages/round1/round1-16/round1-16",
-    "pages/round1/round1-17/round1-17"
+    "pages/round1/round1-17/round1-17",
+    "pages/round1/round1-18/round1-18",
+    "pages/round1/round1-19/round1-19",
+    "pages/round1/round1-20/round1-20",
+    "pages/round1/round1-21/round1-21",
+    "pages/round1/round1-22/round1-22",
+    "pages/round1/round1-23/round1-23",
+    "pages/round1/round1-24/round1-24",
+    "pages/round1/round1-25/round1-25",
+    "pages/round1/round1-26/round1-26"
+  
     
   ],
   "window":{

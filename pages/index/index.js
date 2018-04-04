@@ -51,15 +51,16 @@ Page({
     })
   },
   getRound: function(){
-    var value = wx.setStorageSync('round', "/pages/guide/guide")
     try {
-      var value = wx.getStorageSync('round')
-      wx.redirectTo({
-        url: value
-      })
+      var value = wx.getStorageSync('round');
+      console.log(value)
       if(value === ''){
         wx.redirectTo({
           url: "/pages/round1/round1-1/round1-1"
+        })
+      }else{
+        wx.redirectTo({
+          url: value
         })
       }
     } catch (e) {

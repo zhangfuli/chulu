@@ -53,7 +53,7 @@ Page({
 
 
   handletouchmove: function (event) {
-    console.log("currentId:" + this.stack.checkpop().id)
+    // console.log("currentId:" + this.stack.checkpop().id)
   },
   moving: function (event) {
     var startX = event.touches[0].clientX;
