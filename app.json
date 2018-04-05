@@ -1,17 +1,19 @@
 {
   "pages":[
-  
-    
-   
-    
-
-    "pages/round1/round1-27/round1-27",
- 
-   
-   
-  
-   
-   
+    "pages/round2/round2-2/round",
+    "pages/round2/round2-3/round",
+    "pages/round2/round2-4/round",
+    "pages/round2/round2-5/round",
+    "pages/round2/round2-6/round",
+    "pages/round2/round2-7/round",
+    "pages/round2/round2-8/round",
+    "pages/round2/round2-9/round",
+    "pages/round2/round2-10/round",
+    "pages/round2/round2-11/round",
+    "pages/round2/round2-12/round",
+    "pages/round2/round2-13/round",
+    "pages/round2/round2-14/round",
+    "pages/round2/round2-15/round",
   
     "pages/guide/guide",
     "pages/model/model",
@@ -42,7 +44,13 @@
     "pages/round1/round1-23/round1-23",
     "pages/round1/round1-24/round1-24",
     "pages/round1/round1-25/round1-25",
-    "pages/round1/round1-26/round1-26"
+    "pages/round1/round1-26/round1-26",
+    "pages/round1/round1-27/round1-27",
+    "pages/round1/round1-28/round1-28",
+    "pages/round1/round1-29/round1-29",
+    "pages/round1/round1-30/round1-30",
+
+    "pages/round2/round2-1/round"
   
     
   ],

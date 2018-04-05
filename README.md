@@ -5,6 +5,11 @@
 ##### 修改css的宽度
 ##### 修改setStorage/redirectURL
 
+### 升级--程序员不愿意做太多的重复工作
+##### 在app.js里加上新建的页面
+##### 在新建的页面里加入data.js配置--修改data[],setStorage/redirectURL
+##### 修改css的宽度
+
 ### 未完成
 ##### 加主页
 ##### wx.getStorage

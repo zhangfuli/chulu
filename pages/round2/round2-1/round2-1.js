@@ -12,7 +12,8 @@ Page({
     items: [],
     stack: '',
     originItems: [],
-    obstacle: ''
+    obstacle: '',
+    round:''
   },
 
   /**
@@ -22,6 +23,10 @@ Page({
     var items = getData();
     this.items = items;
     this.obstacle = 0;
+    this.round = getSelfUrl().split('/')[getSelfUrl().split('/').length-1].replace(/[a-z]+/g,'');
+    this.setData({
+      round: this.round
+    })
     this.setData({
       items: items
     })
