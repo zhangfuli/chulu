@@ -1,9 +1,9 @@
 let StartPosition = '';
 function getSelfUrl() {
-  return '/pages/round2/round2-1/round2-1'
+  return '/pages/round2/round2-1/round'
 }
 function getNextUrl() {
-  return '/pages/round2/round2-2/round2-2'
+  return '/pages/round2/round2-2/round'
 }
 function getData() {
   /**

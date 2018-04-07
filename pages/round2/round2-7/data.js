@@ -1,9 +1,9 @@
 let StartPosition = '';
 function getSelfUrl() {
-  return '/pages/round2/round2-1/round2-1'
+  return '/pages/round2/round2-7/round'
 }
 function getNextUrl() {
-  return '/pages/round2/round2-2/round2-2'
+  return '/pages/round2/round2-8/round'
 }
 function getData() {
   /**
@@ -13,14 +13,12 @@ function getData() {
    * 
    */
   let data = [
-    [1,0,0,0,0,0],
+    [1,0,0,1,0,0],
     [0,0,0,0,0,0],
-    [0,0,0,1,0,1],
-    [0,0,0,0,1,2],
-    [0,0,1,0,0,0],
-    [0,0,0,1,0,0],
-    [0, 0, 0, 0, 0, 0],
-    [0,0,1,0,0,0]
+    [0,0,0,0,0,0],
+    [1,0,0,0,0,1],
+    [2,1,0,0,0,0],
+    [0,0,0,0,0,1]
   ];
 
 
