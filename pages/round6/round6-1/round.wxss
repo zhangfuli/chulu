@@ -1,0 +1,17 @@
+.content{
+  width: 600rpx;
+  flex-direction: row;
+  margin: 0 auto;
+}
+.tip{
+  width: 100rpx;
+  height: 100rpx;
+  background: white;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center; 
+  position: fixed;
+  bottom: 30rpx;
+  left: 30rpx;
+}

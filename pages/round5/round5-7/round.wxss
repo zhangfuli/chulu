@@ -1,1 +1,5 @@
-/* pages/round5/round5-7/round.wxss */
+.content{
+  width: 600rpx;
+  flex-direction: row;
+  margin: 0 auto;
+}

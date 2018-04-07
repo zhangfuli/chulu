@@ -258,7 +258,7 @@ Page({
   touchend: function () {
     if (this.stack.getLength() + this.obstacle === this.items.length) {
       wx.showToast({
-        title: 'great!',
+        title: '闯关开始!',
         icon: 'success',
         duration: 2000
       })

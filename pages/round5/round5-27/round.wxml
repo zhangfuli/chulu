@@ -1,2 +1,26 @@
-<!--pages/round5/round5-27/round.wxml-->
-<text>pages/round5/round5-27/round.wxml</text>
+<!--pages/round1/round1-2test/round1-2test.wxml-->
+<view class="counter-warp">
+    <view class='title'>
+        {{round}}
+      </view>
+    <view class="content">
+      <block wx:for="{{items}}" wx:for-item="item" wx:for-index="idx">  
+        <view id='{{item.id}}'
+              class='block {{item.dataset.class}}'
+              data-arrived='{{item.arrived}}'
+              data-position='{{item.position}}'
+              data-attribute = '{{item.attribute}}'
+              data-class='{{item.class}}'
+              bindtouchstart="handletouchmove" 
+              bindtouchmove="moving"
+              bindtouchend='touchend'
+              bindlongtap='refresh'
+              >
+        </view>
+      </block>  
+  </view>
+  <view class='img-wrap {{animation}}' bindtap='refresh'> 
+    <image src='/pages/images/shuaxin.png' class='img'></image>
+  </view>
+  </view>
+

@@ -68,5 +68,22 @@ Page({
         url: "/pages/round1/round1-1/round1-1"
       })
     }
+  },
+  rule: function(){
+    wx.redirectTo({
+      url: "/pages/guide/guide"
+    })
+  },
+  bangdan: function(){
+    wx.showModal({
+      content: '暂未开发',
+      success: function (res) {
+        if (res.confirm) {
+          console.log('用户点击确定')
+        } else if (res.cancel) {
+          console.log('用户点击取消')
+        }
+      }
+    })
   }
 })
