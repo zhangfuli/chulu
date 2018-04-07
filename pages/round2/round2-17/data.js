@@ -3,7 +3,7 @@ function getSelfUrl() {
   return '/pages/round2/round2-17/round'
 }
 function getNextUrl() {
-  return '/pages/round2/round2-2/round'
+  return '/pages/round2/round2-18/round'
 }
 function getData() {
   /**
