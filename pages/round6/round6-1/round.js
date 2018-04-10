@@ -107,10 +107,10 @@ Page({
           this.items[i] = this.stack.getStack()[j]
         }
       }
-      this.setData({
-        items: this.items
-      })
     }
+    this.setData({
+      items: this.items
+    })
   },
   addPath: function () {
     //判断stack中最后两个item的相对位置
@@ -283,22 +283,6 @@ Page({
   refresh: function () {
     wx.redirectTo({
       url: getSelfUrl()
-    })
-  },
-  theEnd: function(){
-    wx.showModal({
-      content: '没错，这一关是没法一步走完的，跌跌撞撞到达这里，说明你真的很厉害了，可是人生中总是有某些事无法一步走完，无法如你所愿，有很多无可奈何，生活还要继续,不要总是沉湎于过去，这句话送给我自己，也送给你。奋斗的人生才是最幸福的',
-      success: function (res) {
-        if (res.confirm) {
-          wx.redirectTo({
-            url: getNextUrl()
-          })
-        } else if (res.cancel) {
-          wx.redirectTo({
-            url: getNextUrl()
-          })
-        }
-      }
     })
   }
 })

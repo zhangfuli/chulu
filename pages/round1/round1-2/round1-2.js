@@ -53,7 +53,7 @@ Page({
 
 
   handletouchmove: function (event) {
-    console.log("currentId:" + this.stack.checkpop().id)
+    // console.log("currentId:" + this.stack.checkpop().id)
   },
   moving: function (event) {
     var startX = event.touches[0].clientX;
@@ -102,10 +102,10 @@ Page({
           this.items[i] = this.stack.getStack()[j]
         }
       }
-      this.setData({
-        items: this.items
-      })
     }
+    this.setData({
+      items: this.items
+    })
   },
   addPath: function () {
     //判断stack中最后两个item的相对位置
