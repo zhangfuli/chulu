@@ -23,11 +23,10 @@
       </view>
       <view class='info'> 
         <view>名称：一路到北</view>
-        <view>玩法：用一笔画完图上的白格 </view>
+        <view>玩法：用一笔画完图上的白格，寻找欧拉通路！ </view>
         <view>蓝格：起点</view>
         <view>白格：路径</view>
-        <view>红格：障碍</view>
-        <view> 关卡：共6大关，前5大关为30小关，第六大关仅一关，是强者就试试6-1！</view>        
+        <view>红格：障碍</view>    
       </view>
   </view>
   <view class='img-wrap {{animation}}' bindtap='refresh'> 

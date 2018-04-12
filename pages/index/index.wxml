@@ -1,7 +1,7 @@
 <!--index.wxml-->
 <view class="container">
 <view class='btn-wrapper'>
-  <button bindtap='getRound' class='button'>闯关</button>
+  <button bindtap='getRound' class='button'>开始</button>
   <button bindtap='rule' class='button'>规则</button>
   <button bindtap='bangdan' class='button'>榜单</button>
 </view>
