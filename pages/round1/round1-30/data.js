@@ -60,6 +60,6 @@ function getSelfUrl() {
   return '/pages/round1/round1-30/round1-30'
 }
 function getNextUrl() {
-  return '/pages/round2/round2-1/round2-1'
+  return '/pages/round2/round2-1/round'
 }
 export { getData, getSelfUrl, getNextUrl, getStart }
