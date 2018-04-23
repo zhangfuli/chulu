@@ -1,0 +1,43 @@
+ for (let i in this.items) {
+      if ((this.items[i].left - this.startX < 0 && this.items[i].right - this.startX>0)
+        && (this.items[i].top - this.startY < 0 && this.items[i].bottom - this.startY > 0)) {
+        event.currentTarget.id = this.items[i].id
+        console.log(event.currentTarget.id)
+        //bug位置漂移
+      }
+    }
+
+
+[  //起点
+{
+	parentClass: 'start-end'
+	childClass: ['path up hide','endpoint','path down hide'],
+},{
+	parentClass: 'block-up-path'
+	childClass: ['path up','endpoint','path down hide'],
+},{
+	parentClass: 'block-left-path'
+	childClass: ['path up','endpoint','path down hide'],
+},{
+	parentClass: 'block-down-path'
+	childClass: ['path up','endpoint','path down hide'],
+},{
+	parentClass: 'block-left-right-path'
+	childClass: ['path up','endpoint','path down hide'],
+},{
+	parentClass: 'block-up-down-path'
+	childClass: ['path up','endpoint',' path down hide'],
+},{
+	parentClass: 'block-up-left-path'
+	childClass: ['row-up-path','row-path','row-endpoint'],
+},{
+	parentClass: 'block-left-down-path'
+	childClass: ['row-up-path','row-path','row-endpoint'],
+},{
+	parentClass: 'block-right-down-path'
+	childClass: ['row-up-path','row-path','row-endpoint'],
+},{
+	parentClass: 'block-up-right-path'
+	childClass: ['row-up-path','row-path','row-endpoint'],
+}
+]
